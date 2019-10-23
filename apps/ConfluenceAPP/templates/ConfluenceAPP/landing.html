@@ -55,7 +55,7 @@ function init() {
     var mapOptions = {
         // center: new google.maps.LatLng(52.373922, -3.427734),
         center: new google.maps.LatLng({{pt_lat}}.000000, {{pt_long}}.000000),
-        zoom: 4,
+        zoom: 6,
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         mapTypeControl: false
     };
@@ -224,7 +224,7 @@ function addCircle() {
         strokeOpacity: 0.9,
         strokeWeight: 2
     });
-    circle.setRadius(5000);
+    circle.setRadius(10000);
 }
 
 // function addKmlLayer() {
@@ -365,6 +365,7 @@ function addShowCoords() {
 	<input type="button" value="Get Route" onclick="calcRoute()">
 </div> -->
 <div id="directionsPanel" style="float:right;width:30%;height:100%"></div>
+<!-- <div id="directionsPanel" style="float:right;width:30%;height:100%"></div> -->
 <div id="mapDiv"></div>
 <!-- <div id="coordsDiv"></div> -->
 
