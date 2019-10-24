@@ -1,1 +1,9 @@
+*{
+    border: 1px black solid;
+    /* font-family: sans-serif; */
+    
+}
 
+.inlineblock {
+    display: inline-block;
+}
