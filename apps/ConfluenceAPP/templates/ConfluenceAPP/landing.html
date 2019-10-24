@@ -384,8 +384,14 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
         </div>
     </div>
     <div class="row">
-            <div class="col s4" class="inlineblock">
-                info section
+            <div class="col s4" >
+                <h5>Coordinates entered:</h5>
+                <b>Latitude:</b> {{pt_lat}}.000000 <br>
+                <b>Longitude:</b> {{pt_long}}.000000
+                <h5>Nearest thing:</h5>
+                <p>THING</p>
+                <h5>Nearest City/Town:</h5>
+                <p>THING</p>
             </div>
             <div class="col s4" class="inlineblock">
                 <iframe src="http://confluence.org/confluence.php?lat={{pt_lat}}&lon={{pt_long}}" style="-webkit-transform:scale(1.0);-moz-transform-scale(1.0);" width="600" height="600"></iframe>
