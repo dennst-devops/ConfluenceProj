@@ -3,6 +3,7 @@
 
 <head>
     {% load static %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="{% static 'ConfluenceAPP/css/style.css' %}">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -34,8 +35,6 @@
         }
     </style>
 
-
-
     <!-- Add the base url for your web server here, 
 e.g. http://localhost:8080/gmaps/pluralsight -->
     <base href="<ADD YOUR WEB SERVER BASE URL HERE">
@@ -53,8 +52,8 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
         var initialZoom;
         var elevationService;
         var geocoder;
-        // var lat = pt_lat;
-        // var long = pt_long;
+        var elevator = new google.maps.ElevationService;
+        var infowindow = new google.maps.InfoWindow({map: map});
 
         function init() {
             var mapOptions = {
@@ -83,24 +82,9 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
         addGeocodingService();
         addGoToInitialExtent();
         addShowCoords();
+        displayLocationElevation(event.latLng, elevator, infowindow);
 }
         google.maps.event.addDomListener(window, "load", init);
-
-
-        // function addButtons() {
-        //     document.getElementById('btnTerrain').addEventListener('click', function () {
-        //         map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
-        //     });
-        //     document.getElementById('btnHybrid').addEventListener('click', function () {
-        //         map.setMapTypeId(google.maps.MapTypeId.HYBRID);
-        //     });
-        //     document.getElementById('btnRoadmap').addEventListener('click', function () {
-        //         map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
-        //     });
-        //     document.getElementById('btnSatellite').addEventListener('click', function () {
-        //         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-        //     });
-        // }
 
         function addGroundOverlay() {
             // south-west and north-east corners
@@ -123,128 +107,42 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
         map: map,
         // title: "The Offa's Dyke Center, Knighton, Powys"
     });
-
-        // var contentString = '<div id="content">' +
-        //         '<div id="siteNotice">' +
-        //         '</div>' +
-        //         '<h1 id="firstHeading" class="firstHeading">The Offa\'s Dyke Center</h1>' +
-        //         '<div id="bodyContent">' +
-        //         '<p>The <b>Offa\'s Dyke Center</b> is located in the middle of the pretty town of Knighton, in Powys.</p>' +
-        //         '<p>The Centre, opened in 1999, forms the focus for activities based on the 8th Century earthwork built ' +
-        //         'by <i>Offa</i>, the King of Mercia. The dyke follows the Welsh English border from the hills above ' +
-        //         'Prestatyn to the Severn Estuary near Chepstow. With its free exhibition and car park, the Centre caters' + 
-        //         'for the needs of a wide range of visitors, from those taking toddlers to play in the surrounding park ' +
-        //         'and play area, to those exploring the border area by car, cycle or on foot, to education groups ' +
-        //         'studying the history of the area, and particularly that of Offas Dyke. There is something here ' +
-        //         'for everyone.</p>' +
-        //         '<img src="http://www.offasdyke.demon.co.uk/odaj3.jpg"/>' +
-        //         '<p>For more information, visit the center <a href="http://www.offasdyke.demon.co.uk/odc.htm">web page</a>' +
-        //         '</div>' +
-        //         '</div>';
-
-        // var infowindow = new google.maps.InfoWindow({
-        //     content: contentString
-        // });
-
-        // google.maps.event.addListener(centerMarker, 'click', function () {
-        //     infowindow.open(map, centerMarker);
-        // });
-
-        var pubMarker = new google.maps.Marker({
-            icon: image,
-            position: new google.maps.LatLng(52.343866, -3.0492420),
-            map: map,
-            title: "The Knighton Hotel"
-        });
-
 }
 
-        // function addPolyline() {
-        //     var pathCoordinates = [
-        //         new google.maps.LatLng(52.3439000, -3.0493927),
-        //         new google.maps.LatLng(52.3440737, -3.0491620),
-        //         new google.maps.LatLng(52.3442474, -3.0494893),
-        //         new google.maps.LatLng(52.3443588, -3.0498272),
-        //         new google.maps.LatLng(52.3446243, -3.0500257),
-        //         new google.maps.LatLng(52.3451716, -3.0507070),
-        //         new google.maps.LatLng(52.3453617, -3.0509162)
-        //     ];
-        //     var pathToCenter = new google.maps.Polyline({
-        //         path: pathCoordinates,
-        //         geodesic: false,
-        //         strokeColor: '#0000FF',
-        //         strokeOpacity: 1.0,
-        //         strokeWeight: 2
-        //     });
-        //     pathToCenter.setMap(map);
-        // }
-
-        // function addEditablePolygon() {
-        //     var natureCoords = [
-        //         new google.maps.LatLng(52.347295, -3.059607),
-        //         new google.maps.LatLng(52.347138, -3.061066),
-        //         new google.maps.LatLng(52.346351, -3.060465),
-        //         new google.maps.LatLng(52.345460, -3.060465),
-        //         new google.maps.LatLng(52.344569, -3.059864),
-        //         new google.maps.LatLng(52.344726, -3.058748)
-        //     ];
-        //     var natureArea = new google.maps.Polygon({
-        //         path: natureCoords,
-        //         strokeColor: "#FFFFFF",
-        //         strokeOpacity: 0.8,
-        //         strokeWeight: 2,
-        //         fillColor: "#00FF00",
-        //         fillOpacity: 0.6,
-        //         editable: true
-        //     });
-        //     natureArea.setMap(map);
-        // }
-
-        // function addDraggableRectangle() {
-        //     var bounds = new google.maps.LatLngBounds(
-        //             new google.maps.LatLng(52.340308, -3.052557),
-        //             new google.maps.LatLng(52.340799, -3.050647)
-        //     );
-        //     var rectangle = new google.maps.Rectangle({
-        //         bounds: bounds,
-        //         map: map,
-        //         fillColor: "#00FF00",
-        //         fillOpacity: 0.6,
-        //         strokeColor: "#FF0000",
-        //         strokeOpacity: 0.8,
-        //         strokeWeight: 2,
-        //         draggable: true
-        //     });
-        // }
-
+function displayLocationElevation(location, elevator, infowindow) {
+  // Initiate the location request
+    elevator.getElevationForLocations({
+    'locations': [int({{pt_lat}}.000000), int({{pt_long}}.000000)]
+    }, function(results, status) {
+    infowindow.setPosition(location);
+    if (status === 'OK') {
+      // Retrieve the first result
+    if (results[0]) {
+        // Open the infowindow indicating the elevation at the clicked position.
+        infowindow.setContent('The elevation at this point <br>is ' +
+            results[0].elevation + ' meters.');
+    } else {
+        infowindow.setContent('No results found');
+    }
+    } else {
+    infowindow.setContent('Elevation service failed due to: ' + status);
+    }
+    });
+}
         function addCircle() {
             var circle = new google.maps.Circle({
                 map: map,
                 // center: new google.maps.LatLng(52.341049, -3.053942),
                 // center: new google.maps.LatLng(44.000000, -122.000000),
                 center: new google.maps.LatLng({{pt_lat}}.000000, {{pt_long}}.000000),
-        fillColor: "#FF33FF",
-            fillOpacity: 0.8,
+                fillColor: "#FF33FF",
+                fillOpacity: 0.8,
                 strokeColor: "#FF0000",
-                    strokeOpacity: 0.9,
-                        strokeWeight: 2
+                strokeOpacity: 0.9,
+                strokeWeight: 2
     });
         circle.setRadius(10000);
 }
-
-        // function addKmlLayer() {
-        //     var offasDykeLayer = new google.maps.KmlLayer('http://hikeview.co.uk/tracks/hikeview-offas-dyke.kml');
-        //     offasDykeLayer.setMap(map);
-        // }
-
-        // function addGeoJSONDataLayer() {
-        // 	map.data.loadGeoJson('http://localhost:8080/gmaps/data/SecretCastlesOfWales.json');
-
-        // 	map.data.setStyle({
-        // 		icon: 'http://localhost/gmaps/images/castle.png',
-        // 		strokeColor: 'green'
-        // 	});
-        // }
 
         function addElevationService() {
 
@@ -324,55 +222,18 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
                 document.getElementById('coordsDiv').innerHTML = "Center: " + newCenter.toString() + "<br>Zoom: " + newZoom;
             });
         }
-
-// function calcRoute() {
-
-// 	var directionsService = new google.maps.DirectionsService();
-
-// 	var directionsDisplay;
-//     directionsDisplay = new google.maps.DirectionsRenderer();
-//     directionsDisplay.setMap(map);
-// 	directionsDisplay.setPanel(document.getElementById("directionsPanel"));	
-
-//     var start = document.getElementById("start").value;
-// 	var end = new google.maps.LatLng(52.345860,-3.051817);
-//     var request = {
-//         origin : start,
-//         destination : end,
-//         travelMode : google.maps.TravelMode.DRIVING
-//     };
-//     directionsService.route(request, function (result, status) {
-//         if (status == google.maps.DirectionsStatus.OK) {
-//             directionsDisplay.setDirections(result);			
-//         } else {
-// 			alert("Could not calculate directions. Try again, or buy a map!");
-// 		}
-//     });
-// }
     </script>
-
-
 
 </head>
 
 <body>
-<!-- <div id="container"> -->
-    <!-- <div>
-    <button id="btnTerrain">Terrain</button>
-    <button id="btnRoadmap">Roadmap</button>
-    <button id="btnSatellite">Satellite</button>
-    <button id="btnHybrid">Hybrid</button>
-</div> -->
-    <!-- <div>
-    <input id="address" type="textbox" value="Knighton, Powys" style="width:300px;">
-    <input type="button" value="Geocode" onclick="geocodeAddress()">
-</div> -->
-    <!-- <div>
-	<input id="start" type="textbox" value="" style="width:300px;">
-	<input type="button" value="Get Route" onclick="calcRoute()">
-</div> -->
-<!-- <div id="mapDiv" style="width:600px;height:600px"></div> -->
-    <div class="row">
+        <div style="position: fixed; z-index: -99; width: 100%; height: auto">
+                <video loop autoplay muted playsinline frameborder="0" height="100%" width="100%" 
+                    src="{% static 'ConfluenceAPP\videos\starrynight.mp4'%}">
+                </video> 
+                <!-- this is a video file above me -->
+            </div>
+    <div class="row" style="padding-top: 75px;">
 
         <div class="col s4">
             <div id="mapDiv" style="width:600px;height:600px"></div>
@@ -382,19 +243,23 @@ e.g. http://localhost:8080/gmaps/pluralsight -->
     &fov=80&heading=70&pitch=0
     &key=AIzaSyCaAwmeyhEqabF0wWWcjEusQIN4SHxZ1x4" alt="">
         </div>
+        <div class="col s4">
+            <iframe src="http://confluence.org/confluence.php?lat={{pt_lat}}&lon={{pt_long}}" style="-webkit-transform:scale(1.0);-moz-transform-scale(1.0);" width="600" height="600"></iframe>
+        </div>
     </div>
-    <div class="row">
-            <div class="col s4" >
-                <h5>Coordinates entered:</h5>
-                <b>Latitude:</b> {{pt_lat}}.000000 <br>
+    <div class="row" style="padding-left: 75px;">
+            <div class="col s4" style="color: beige; text-align: left; font-size: 16pt;">
+                <h4>Coordinates entered:</h4>
+                <b>Latitude:</b> {{pt_lat}}.000000
+                <br>
                 <b>Longitude:</b> {{pt_long}}.000000
-                <h5>Nearest thing:</h5>
-                <p>THING</p>
-                <h5>Nearest City/Town:</h5>
-                <p>THING</p>
             </div>
-            <div class="col s4" class="inlineblock">
-                <iframe src="http://confluence.org/confluence.php?lat={{pt_lat}}&lon={{pt_long}}" style="-webkit-transform:scale(1.0);-moz-transform-scale(1.0);" width="600" height="600"></iframe>
+            <div class="col s4" class="inlineblock" style="color: beige; text-align: center; font-size: 16pt;">
+                <!-- <h4>Nearest thing:</h4>
+                <p>THING</p> -->
+            </div>
+            <div class="col s4" class="inlineblock" style="text-align: center;">
+                <a href="http://localhost:8000/"class="btn waves-effect waves-green green btn-medium" style="width: 100px; margin-top: 30px;"><i class="material-icons">home</i></a>
             </div>
     </div>
 </div>
